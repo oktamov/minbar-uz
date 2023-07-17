@@ -1,17 +1,17 @@
 from rest_framework import serializers
-
 from rest_framework_simplejwt.tokens import RefreshToken
+
 from .models import User
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ["email", "first_name", "last_name", "password"]
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        password = validated_data.pop('password', None)
+        password = validated_data.pop("password", None)
         user = User(**validated_data)
         if password:
             user.set_password(password)
@@ -21,28 +21,28 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    password = serializers.CharField(style={'input_type': 'password'})
+    password = serializers.CharField(style={"input_type": "password"})
 
     def validate(self, attrs):
-        email = attrs.get('email')
-        password = attrs.get('password')
+        email = attrs.get("email")
+        password = attrs.get("password")
 
         if email and password:
             user = User.objects.filter(email=email).first()
 
             if user:
                 if not user.is_active:
-                    raise serializers.ValidationError('User account is disabled.')
+                    raise serializers.ValidationError("User account is disabled.")
                 if not user.check_password(password):
-                    raise serializers.ValidationError('Invalid password.')
+                    raise serializers.ValidationError("Invalid password.")
             else:
-                raise serializers.ValidationError('User not found.')
+                raise serializers.ValidationError("User not found.")
         else:
             raise serializers.ValidationError('Must include "email" and "password".')
 
         refresh = RefreshToken.for_user(user)
-        attrs['tokens'] = {'access': str(refresh.access_token), 'refresh': str(refresh)}
-        attrs['user'] = user
+        attrs["tokens"] = {"access": str(refresh.access_token), "refresh": str(refresh)}
+        attrs["user"] = user
         return attrs
 
 
@@ -59,6 +59,6 @@ class UserPasswordChangeSerializer(serializers.Serializer):
             user.set_password(self.new_password1)
 
         else:
-            return 'Invalid password'
+            return "Invalid password"
         user.save()
         return user

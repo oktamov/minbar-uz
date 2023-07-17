@@ -2,9 +2,8 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics
 from rest_framework.response import Response
 
-from common.models import Quiz, Choice, Category
-from common.serializers import QuizSerializer, ChoiceVoteSerializer, CategorySerializer
-
+from common.models import Category, Choice, Quiz
+from common.serializers import CategorySerializer, ChoiceVoteSerializer, QuizSerializer
 
 # Create your views here.
 
@@ -19,7 +18,7 @@ class ChoiceCreateView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = ChoiceVoteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        choice_id = serializer.validated_data.get('choice_id')
+        choice_id = serializer.validated_data.get("choice_id")
         choice = Choice.objects.get(id=choice_id)
         choice.votes += 1
         choice.save()

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import User
-from .serializers import UserRegisterSerializer, UserLoginSerializer, UserPasswordChangeSerializer
+from .serializers import UserLoginSerializer, UserPasswordChangeSerializer, UserRegisterSerializer
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -21,10 +21,10 @@ class UserLoginView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user = serializer.validated_data['user']
+        user = serializer.validated_data["user"]
         login(request, user)
 
-        return Response(serializer.validated_data['tokens'])
+        return Response(serializer.validated_data["tokens"])
 
 
 class UserLogoutView(generics.GenericAPIView):
@@ -32,14 +32,14 @@ class UserLogoutView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         logout(request)
-        return Response({'detail': 'Logged out successfully.'})
+        return Response({"detail": "Logged out successfully."})
 
 
 class UserPasswordChangeView(generics.GenericAPIView):
     serializer_class = UserPasswordChangeSerializer
 
     def post(self, request, *args, **kwargs):
-        return Response({'detail': "successfully password change"})
+        return Response({"detail": "successfully password change"})
 
 
 class ProfileView(APIView):

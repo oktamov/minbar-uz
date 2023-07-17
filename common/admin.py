@@ -1,15 +1,13 @@
 from django.contrib import admin
 
-from common.models import Quiz, Choice, Category
+from common.models import Category, Choice, Quiz
 
 
 @admin.register(Quiz)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['title', 'is_active']
+    list_display = ["title", "is_active"]
 
 
 @admin.register(Category)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['title']
-
-
+    list_display = ["title"]

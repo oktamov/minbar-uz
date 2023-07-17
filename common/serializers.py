@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
-from common.models import Quiz, Choice, Category
+from common.models import Category, Choice, Quiz
 
 
 class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
-        fields = ['id', 'answer', 'is_correct', 'votes', 'percent']
+        fields = ["id", "answer", "is_correct", "votes", "percent"]
 
 
 class ChoiceVoteSerializer(serializers.Serializer):
@@ -18,10 +18,10 @@ class QuizSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Quiz
-        fields = ['id', 'title', 'created_at', 'choices']
+        fields = ["id", "title", "created_at", "choices"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'title']
+        fields = ["id", "title"]
