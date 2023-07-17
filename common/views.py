@@ -1,9 +1,13 @@
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import generics
+from rest_framework import generics, filters
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from common.models import Category, Choice, Quiz
 from common.serializers import CategorySerializer, ChoiceVoteSerializer, QuizSerializer
+from pages.models import Post
+from pages.serializers import PostSerializer
+
 
 # Create your views here.
 
@@ -32,3 +36,10 @@ class ChoiceCreateView(generics.CreateAPIView):
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+
+class SearchView(generics.ListAPIView):
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['title', 'page__name', 'body']
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer

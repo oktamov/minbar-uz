@@ -13,3 +13,4 @@ flake8-comprehensions==3.13.0
 flake8-eradicate==1.5.0
 flake8-pie==0.16.0
 pyflakes==3.0.1
+coreapi==2.3.3
