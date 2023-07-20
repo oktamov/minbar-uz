@@ -14,3 +14,6 @@ flake8-eradicate==1.5.0
 flake8-pie==0.16.0
 pyflakes==3.0.1
 coreapi==2.3.3
+facebook-sdk==3.1.0
+google-auth==2.22.0
+Pillow==10.0.0
